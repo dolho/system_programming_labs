@@ -1,45 +1,43 @@
 #include <stdio.h>
-#include <stdlib.h>
-#include <fcntl.h>
 #include <errno.h>
 #include <string.h>
-#include <unistd.h>
-
+#include <fcntl.h>
+#include <stdlib.h>
 
 
 int main(int argc, char *argv[])
 {
+    const unsigned int buffer_length = 512;
     if (argc < 2)
     {
-        printf("Need input file\n");
+        fprintf(stderr, "Need input file\n");
         exit(1);
     }
     if (argc < 3)
     {
-        printf("Need output file\n");
+        fprintf(stderr, "Need output file\n");
         exit(1);
     }
     char *input_filename = argv[1];
     char *output_filename = argv[2];
-    int fIn = open(input_filename, O_RDONLY);
-    if (fIn == -1)
+    int input_file = open(input_filename, O_RDONLY);
+    int output_file = open(output_filename, O_CREAT | O_TRUNC | O_WRONLY , 0644); 
+    if (input_file == -1)
     {
-        printf("Input file %s.\n Error: %s\n", input_filename, strerror(errno));
+        fprintf(stderr, "Input file %s.\n Error: %s\n", input_filename, strerror(errno));
         exit(1);
     }
-    int fOut = open(output_filename, O_CREAT | O_WRONLY | O_APPEND, 0644);
-    if (fOut == -1)
+    if (output_file == -1)
     {
-        printf("Output file %s.\n Error: %s\n", output_filename, strerror(errno));
+        fprintf(stderr, "Output file %s.\n Error: %s\n", output_filename, strerror(errno));
         exit(1);
     }
-    uint changed_bytes_count = 0;
-    char buffer[512];
-    
+    unsigned int changed_bytes_count = 0;
+    char buffer[buffer_length];
     while (1)
     {
-        int bytes = read(fIn, buffer, sizeof(buffer));
-        for (uint i = 0; i < sizeof(buffer); i++)
+        int count_of_bytes = read(input_file, buffer, buffer_length);
+        for (int i = 0; i < buffer_length; i++)
         {
             if (buffer[i] >= 'a' && buffer[i] <= 'z')
             {
@@ -47,12 +45,12 @@ int main(int argc, char *argv[])
                 changed_bytes_count++;
             }
         }
-        write(fOut, buffer, sizeof(buffer));
-        if (bytes < sizeof(buffer))
+        write(output_file, buffer, buffer_length);
+        if (count_of_bytes < buffer_length)
             break;
     }
     printf("During runtime %d bytes was changed\n", changed_bytes_count);
-    close(fIn);
-    close(fOut);
+    close(input_file);
+    close(output_file);
     return 0;
 }
