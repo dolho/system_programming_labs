@@ -37,7 +37,7 @@ int main(int argc, char *argv[])
     while (1)
     {
         int count_of_bytes = read(input_file, buffer, buffer_length);
-        for (int i = 0; i < buffer_length; i++)
+        for (int i = 0; i < count_of_bytes; i++)
         {
             if (buffer[i] >= 'a' && buffer[i] <= 'z')
             {
@@ -45,7 +45,7 @@ int main(int argc, char *argv[])
                 changed_bytes_count++;
             }
         }
-        write(output_file, buffer, buffer_length);
+        write(output_file, buffer, count_of_bytes);
         if (count_of_bytes < buffer_length)
             break;
     }
