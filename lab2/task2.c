@@ -10,9 +10,12 @@
 
 int main(int argc, char* argv[])
 {
-    FILE *fp= NULL;
+    FILE * fp= NULL;
     pid_t process_id = 0;
     pid_t sid = 0;
+    fp = fopen("Log.txt", "w+");
+    fprintf(fp, "Programm started\n");
+
     char cwd[PATH_MAX];
     if (getcwd(cwd, sizeof(cwd)) != NULL) {
        printf("Current working dir: %s\n", cwd);
@@ -53,7 +56,7 @@ int main(int argc, char* argv[])
     open("/dev/null", O_WRONLY, stdout);
     open("/dev/null", O_WRONLY, stderr);
 
-    fp = fopen(strcat(cwd, "/Log.txt"), "w+");
+    fp = fopen(strcat(cwd, "/Log.txt"), "a+");
 
     fprintf(fp, "Pid: %d\n", getpid());
     fprintf(fp, "Ppid: %d\n", getppid());
