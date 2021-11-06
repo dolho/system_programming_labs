@@ -1,0 +1,34 @@
+New process PID: 31965
+sleep
+sleep
+New process PID: 32031
+sleep
+sleep
+sleep
+Signal code: 0
+Signal number: 15
+Signal value: 0
+Errno association: 0
+Process ID: 32038
+Real user ID: 1000
+Address at which fault occurred: 32038
+Exit value: 0
+Band event for SIGPOLL/SIGIO: 4294967328038
+sleep
+sleep
+sleep
+sleep
+sleep
+Signal code: 0
+Signal number: 15
+Signal value: 0
+Errno association: 0
+Process ID: 32038
+Real user ID: 1000
+Address at which fault occurred: 32038
+Exit value: 0
+Band event for SIGPOLL/SIGIO: 4294967328038
+sleep
+sleep
+sleep
+sleep
