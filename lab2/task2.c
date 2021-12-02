@@ -35,6 +35,10 @@ int main(int argc, char* argv[])
     if (process_id > 0)
     {
         printf("process_id of child process %d \n", process_id);
+        char str[128]; 
+        sprintf(str, "process_id of child process %d \n", process_id);
+        printf(str);
+        fprintf(fp, str);
         exit(0);
     }
 
